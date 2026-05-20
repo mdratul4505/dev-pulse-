@@ -1,6 +1,7 @@
 import { pool } from "../../db";
+import type { IIssue } from "./issue.interface";
 
-const createIssueIntoDB = async (payload: any) => {
+const createIssueIntoDB = async (payload: IIssue) => {
 
     const {
         title,
