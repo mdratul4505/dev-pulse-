@@ -1,3 +1,5 @@
 node_modules
 .env
 loogrr.text
+dist
+.vercel

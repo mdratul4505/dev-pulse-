@@ -1,76 +1,4 @@
-// import bcrypt from "bcryptjs";
-// import { pool } from "../../db";
-// import { match } from "node:assert";
-// import jwt, { type JwtPayload } from "jsonwebtoken";
-// import config from "../../config";
 
-// const loginUserIntoDB = async (payload : {email: string, password: string}) =>{
-// const {email, password} = payload;
-// const userData = await pool.query(`
-    
-//     SELECT * FROM users WHERE email = $1`
-// , [email])
-// if(userData.rows.length === 0){
-//     throw new Error ('invalid credentials')
-// }
-// const user = userData.rows[0]
-// const matchPassword = await bcrypt.compare(password , user.password)
-
-// if(!matchPassword){
-//     throw new Error ('invalid credentials')
-// }
-
-// //generate token here 
-// const jwtPayload = {
-//     id : user.id,
-//     name : user.name,
-//     role : user.role
-// }
-// const accessToken = jwt.sign( jwtPayload, config.secret as string, {expiresIn : "1d"})
-
-
-// const refreshToken = jwt.sign( jwtPayload, config.refresh_Secret as string, {expiresIn : "30d"})
-// return {accessToken, refreshToken}
-
-// } 
-
-// const genereateRefreshToken = async (token : string) =>{
-
-
-// if(!token){
-
-//    throw new Error ('unauthorized access')
-// }
-
-// const decoded = jwt.verify( token as string , config.refresh_Secret as string) as JwtPayload
-// const userData = await pool.query(`
-//     SELECT * FROM users WHERE email= $1
-//     `,[decoded.email])
-
-//     const user = userData.rows[0]
-    
-//     if(userData.rows.length === 0){
-//         throw new Error ('user not found')
-    
-//     }
-
-//     const jwtPayload = {
-//     id : user.id,
-//     name : user.name,
-//     email : user.email,
-//     role : user.role
-// }
-// const accessToken = jwt.sign( jwtPayload, config.secret as string, {expiresIn : "1d"})
-// return {accessToken}
-// }
-
-
-
-
-// export const authService = {
-//     loginUserIntoDB,
-//     genereateRefreshToken,
-// }
 import bcrypt from "bcryptjs";
 import { pool } from "../../db";
 import jwt, { type JwtPayload } from "jsonwebtoken";
@@ -107,7 +35,6 @@ const loginUserIntoDB = async (
     throw new Error("Invalid credentials");
   }
 
-  // jwt payload (include id, name, email, role as per specification and hints)
   const jwtPayload = {
     id: user.id,
     name: user.name,
@@ -138,7 +65,6 @@ const genereateRefreshToken = async (token: string) => {
     throw new Error("Unauthorized access");
   }
 
-  // verify refresh token
   const decoded = jwt.verify(
     token,
     config.refresh_Secret as string
