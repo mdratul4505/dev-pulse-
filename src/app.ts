@@ -1,12 +1,15 @@
 import express, { type Application, type Request, type Response } from 'express'
 import { issueRoute } from './modules/issue/issue.route';
 import { userRoute } from './modules/users/user.route';
+import logger from './middleware/logger';
 const app : Application = express()
 
 
 app.use(express.json());
 app.use(express.text());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(logger);
 
 
 app.get('/', (req: Request, res : Response) => {
